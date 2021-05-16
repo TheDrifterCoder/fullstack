@@ -1,0 +1,27 @@
+<header class="header">
+  <nav class="flex flex-jc-sb flex-ai-c">
+    <a href="/" class="header__logo">
+      <img src="../assets/images/logo.png" alt="test-fullstack">
+    </a>
+    <a href="#" class="header__menu hide_for_desktop">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+
+    <div class="header__links hide_for_mobiles" *ngIf="auth.isAuthenticated()">
+      <a href="#">Estudiantes</a>
+			<a href="#">Usuarios</a>
+    </div>
+
+		<div class="hide_for_mobiles">
+      <a (click)="logout()" class="button header__btns " *ngIf="auth.isAuthenticated()">
+        Cerrar sesión
+      </a>
+      <a class="button header__btns "  (click)="log()" *ngIf="!auth.isAuthenticated()">
+        Iniciar sesión
+      </a>
+    </div>
+  </nav>
+
+</header>
