@@ -96,19 +96,21 @@
 }
 
 .template {
-    position: relative;
+    // position: relative;
 
     &__background {
         display: flex;
-        height: 150%;
+        height: 80%;
+
         background-image: url("../images/desktop.png");
         background-repeat: no-repeat;
         background-position: center bottom;
-        width: 103%;
+        width: 100%;
         background-size: cover;
         background-position: 0% 70%;
 
         &__content {
+             width: 100%;
         }
     }
 }
