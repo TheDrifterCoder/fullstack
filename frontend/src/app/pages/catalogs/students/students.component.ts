@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalsService } from 'src/app/config/globals.service';
 import { StudentsService } from 'src/app/services/catalogs/students.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-students',
@@ -23,18 +22,10 @@ export class StudentsComponent implements AfterViewInit  {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(public globals: GlobalsService, private studentService: StudentsService, public dialog: MatDialog) { }
+  constructor(public globals: GlobalsService, private studentService: StudentsService) { }
 
   ngOnInit(): void {
     this.getStudents();
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(insertStudent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   getStudents(){
@@ -46,21 +37,4 @@ export class StudentsComponent implements AfterViewInit  {
     );
   }
 
-}
-
-
-
-// html para insertar estudiantes
-@Component({
-  selector: 'student-insert',
-  templateUrl: 'studentsInsert.component.html',
-})
-export class insertStudent {
-  constructor(
-    public dialogRef: MatDialogRef<insertStudent>,
-    @Inject(MAT_DIALOG_DATA) public data: '') {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 }
