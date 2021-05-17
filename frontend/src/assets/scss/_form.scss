@@ -1,0 +1,71 @@
+form {
+    .form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        &__header {
+            width: 100%;
+            padding: 5px;
+            color: $darkGray;
+            font-size: $font-small;
+
+            >p {
+                margin-bottom: 0.5rem;
+            }
+
+            >p >b {
+                font-weight: bolder;
+                color: black;
+            }
+        }
+    }
+
+    align-content: center center;
+    border-radius: 5px;
+    box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
+    padding: 0px 40px 40px 40px;
+    background-color: #fff;
+
+    @include breakpoint-up(large) {
+        border-radius: 5px;
+        box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        background-color: #fff;
+    }
+
+    input {
+        width: 100%;
+        margin-top: 20px;
+        border: solid 1px;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        background-color: #ecf0f1;
+        padding: 10px;
+        line-height: 1.5;
+        font-size: $font-small;
+    }
+
+    label {
+        width: 100%;
+        color: $darkBlue;
+        font-size: $font-small;
+        text-align: left;
+        font-weight: 300;
+        margin-top: 10px;
+        margin-bottom: -10px;
+    }
+    
+
+    button {
+        width: 100%;
+        outline: none;
+        border: none;
+        padding: 15px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+}

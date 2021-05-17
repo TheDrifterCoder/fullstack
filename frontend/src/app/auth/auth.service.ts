@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { BackendRouteService } from '../config/backend-route.service';
 import { map } from 'rxjs/operators';
 
@@ -20,94 +20,97 @@ export class AuthService {
 
   private url: any;
   private decodedToken: any;
-  private islogged: boolean;
+  private islogged: boolean = false;
 
   constructor(private uriBack: BackendRouteService, private http: HttpClient) {
     this.url = this.uriBack.backendURI();    
-    this.islogged = false;
   }
 
-  // public get isLoggedIn() { return !!sessionStorage.getItem('auth_token'); }  
-  public get getToken() { return sessionStorage.getItem('auth_token'); }
-  public get getRefreshToken() { return sessionStorage.getItem('refresh'); }
+  loggedIn = false;
 
-  isLoggedIn(): boolean {
-    return this.islogged;
+  registerUser(form: any){
+    console.log(form.value);
+    return this.http.post('http://localhost/laravelAngularApi/public/api/register', form.value);
   }
 
-  public register(userData: any): Observable<any>{
-    var route = this.url + "/register";
-    return this.http.post(route, userData);
+   isAuthenticated(){
+  	const promise = new Promise(
+  		(resolve,reject) => {
+  			setTimeout(() => {
+          let t = localStorage.getItem('token');
+          if(t){
+            this.loggedIn = true;
+            resolve(this.loggedIn);
+          }else{
+            this.loggedIn = false;
+            reject();
+          }
+        },800);
+  		});
+
+  	return promise;
   }
 
-  public login(userData: any): Observable<any> {
-     var route = this.url + "/login";
-     return this.http.post(route, userData).pipe(map(token => {
-      return this.saveToken(token);
-     }));
+  logIn(form: any): Observable<any>{
+    return this.http.post(this.url + '/login', form.value);
+    //return result;
   }
 
-  private saveToken(token: any): any {
-    localStorage.setItem('auth_token', token);
-    localStorage.setItem('auth_user', JSON.stringify(token.data.name));
-    return token;
+  logout(token: any): Observable<any>{
+    return this.http.post(this.url + '/logout', {'token': token});
+    //return result;
   }
 
-  // public logout(userData: any): Observable<any> {
-  //   var route = this.url + "/logout";
+  // public get isLoggedIn() { return !!sessionStorage.getItem('token'); }  
+  // public get getToken() { return localStorage.getItem('token'); }
+  // // public get getRefreshToken() { return localStorage.getItem('refresh'); }
 
-  //   this.route.post(route, {'token': token}).subscribe(
-  //     data => {
-  //        console.log("exit");
-  //     }
-  //   );
-
-  //   return this.http.get(route).pipe(map(token => {
-  //     localStorage.removeItem('auth_token');
-  //     localStorage.removeItem('auth_user');
-
-  //     this.decodedToken = new DecodedToken();
-  //   }));
+  // isLoggedIn(): boolean {
+  //   return this.islogged;
   // }
 
-  public logout(token: any) {
-    
-    var route = this.url + "/logout";
-    // return this.http.post(route, {'token': token});
+  // public register(userData: any): Observable<any>{
+  //   var route = this.url + "/register";
+  //   return this.http.post(route, userData);
+  // }
 
+  // public login(userData: any): Observable<any> {
+  //    var route = this.url + "/login";
+  //    return this.http.post(route, userData).pipe(map(response => {
+  //     return this.saveToken(response);
+  //    }));
+  // }
 
+  // private saveToken(token: any): any {
+  //   localStorage.removeItem('token');
+  //   localStorage.setItem('token', token.data.token);
+  //   localStorage.setItem('auth_user', token.data.user);
+  //   return token;    
+  // }
 
-      return this.http.post<any>(route, {'auth_token': token}).toPromise()
-      .then(res => <any>res)
-      .then(data => {return data;});
+  // logout(token: any): Observable<any>{
+  //   return this.http.post(this.url + '/logout', {'token': token});
+  // }
 
+  // public isAuthenticated(){
+  // 	const promise = new Promise(
+  // 		(resolve,reject) => {
+  // 			setTimeout(() => {
+  //         let t = localStorage.getItem('token');
+  //         if(t){
+  //           this.islogged = true;
+  //           resolve(this.islogged);
+  //         }else{
+  //           this.islogged = false;
+  //           reject();
+  //         }
+  //       },800);
+  // 		});
 
-    // this.route.post(route, {'token': token}).subscribe(
-    //   data => {
-    //      console.log("exit");
-    //   }
-    // );
+  // 	return promise;
+  // }
 
-    // return this.http.get(route).pipe(map(token => {
-    //   localStorage.removeItem('auth_token');
-    //   localStorage.removeItem('auth_user');
-
-    //   this.decodedToken = new DecodedToken();
-    // }));
-  }
-
-  public isAuthenticated(): boolean {
-     var data = localStorage.getItem('auth_token');
-     if(data != undefined && data != '' && data != null){
-       this.islogged = true;
-       return true
-     }
-
-     this.islogged = false;
-     return false;
-  }
-
-  public getUserLogged(): string {
-     return localStorage.getItem('auth_user') || '';
-  }
+  // public getUserLogged(): string {
+  //    return localStorage.getItem('auth_user') || '';
+  // }
 }

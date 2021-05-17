@@ -1,70 +1,122 @@
 .header {
-    nav {
-        padding: 1.0625rem 1.5rem;
+    // para la animacion de la cangre cangre
+    &.open {
+        .header__toggle {
+            > span:first-child {
+                transform: rotate(45deg);
+            }
+
+            > span:nth-child(2) {
+                opacity: 0;
+            }
+
+            > span:last-child {
+                transform: rotate(-45deg);
+            }
+        }
     }
-        &__logo {
-            img {
-                width: 10.375rem;
-                height: 4.125rem;
+
+    .overlay {
+        opacity: 0;
+        position: fixed;
+        top: 80px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient($darkBlue, transparent);
+    }
+ 
+    nav {
+        position: relative;
+        background-color: $white;
+        padding-top: 1.0625rem;
+        padding-bottom: 1.0625rem;
+    }
+
+    &__logo {
+        img {
+            width: 8.375rem;
+            height: 3.125rem;
+        }
+    }
+
+     // icono para el menu en dispositivos
+     &__toggle {
+        > span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background-color: $darkGray;
+            transition: all 300ms ease-in-out;
+            transform-origin: 3px 1px;
+
+            &:not(:last-child) {
+                margin-bottom: 5px;
             }
         }
+    }
 
-        &__menu { //for mobile menu
-            > span {
+    // para el menu en el mobiles, tablets
+    &__menu {
+        position: absolute;
+        width: calc(100% - 5rem);
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        margin-top: 1.875rem;
+        padding: 1.625rem;
+        border-radius: 5px;
+
+        a {
+            display: block;
+            padding: 0.625rem;
+            color: $darkBlue;
+            text-align: center;
+        }
+    }
+
+    &__links {
+        a {
+            position: relative;
+            font-size: $font-small;
+            color: $darkBlue;
+            transition: color 300ms ease-in-out;
+
+            &:not(:last-child) {
+                margin-right: 35px;
+            }
+
+            &::before {
                 display: block;
-                width: 26px;
-                height: 2px;
-                background-color: $darkBlue;
-
-                &:not(:last-child){
-                    margin-bottom: 3px;
-                }
+                position: absolute;
+                content: "";
+                height: 5px;
+                background: $lightBlue;
+                left: 0;
+                right: 0;
+                bottom: -30px;
+                background: linear-gradient(to right, $blue, $grayBlue);
+                opacity: 0;
+                transition: opacity 300ms ease-in-out;
             }
-        }
 
-        &__links {
-            a {
-                position: relative;
-                font-size: $font-small;
-                color: $darkBlue;
-                transition: color 150ms ease-in-out;
-
-                &:not(:last-child){
-                    margin-right: 35px;
-                }
+            &:hover {
+                color: $mediumGray;
 
                 &::before {
-                    position: absolute;
-                    content: "";
-                    display: block;
-                    height: 5px;
-                    background: $lightBlue;
-                    left: 0;
-                    right: 0;
-                    bottom: -30px;
-                }
-
-                &:hover {
-                    color: $mediumGray;
+                    opacity: 1;
                 }
             }
         }
-
-        &__btns {
-            font-weight: 400;
-        }
-}
-
-.hide_for_desktop {
-    // for desktop less than 800px;
-    @include breakpoint-up(large){
-        display: none;
     }
-}
 
-.hide_for_mobiles {
-    // for tables and mobiles
-    @include breakpoint-down(medium){
-        display: none;
+    &__btns {
+        font-weight: $font-small;
+        color: $white;
+        transition: opacity 250ms ease-in-out;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }

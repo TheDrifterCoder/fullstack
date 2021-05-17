@@ -1,27 +1,35 @@
 <header class="header">
-  <nav class="flex flex-jc-sb flex-ai-c">
-    <a href="/" class="header__logo">
+  <div class="overlay has-fade"></div>
+
+  <nav class="container container--pall flex flex-jc-sb flex-ai-c">
+    <a routerLink="/home" class="header__logo">
       <img src="../assets/images/logo.png" alt="test-fullstack">
     </a>
-    <a href="#" class="header__menu hide_for_desktop">
+    <a href="#" id="btnHamburger" target="_self" class="header__toggle hide_for_desktop open">
       <span></span>
       <span></span>
       <span></span>
     </a>
 
-    <div class="header__links hide_for_mobiles" *ngIf="auth.isAuthenticated()">
-      <a href="#">Estudiantes</a>
-			<a href="#">Usuarios</a>
+    <div class="header__links hide_for_mobiles" *ngIf="auth.loggedIn">
+      <a routerLink="/students">Estudiantes</a>
+      <a routerLink="/users">Usuarios</a>
     </div>
 
-		<div class="hide_for_mobiles">
-      <a (click)="logout()" class="button header__btns " *ngIf="auth.isAuthenticated()">
+    <div class="hide_for_mobiles">
+      <a (click)="logout()" class="button header__btns " *ngIf="auth.loggedIn">
         Cerrar sesión
       </a>
-      <a class="button header__btns "  (click)="log()" *ngIf="!auth.isAuthenticated()">
+      <a class="button header__btns " *ngIf="!auth.loggedIn">
         Iniciar sesión
       </a>
     </div>
   </nav>
+
+  <div class=" header__menu has-fade">
+    <a routerLink="/students">Estudiantes</a>
+    <a routerLink="/users">Usuarios</a>
+    <a (click)="logout()">Cerrar sesión</a>
+  </div>
 
 </header>
