@@ -32,10 +32,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class StudentsComponent implements AfterViewInit  {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  // dataSource = ELEMENT_DATA;
 
   // displayedColumns: string[] = ['position', 'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level', 'email', 'phone'];
-  // dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<any>([]);
   public dataResponse: any;
   // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   nPages = this.globals.paginator;
@@ -56,7 +56,8 @@ export class StudentsComponent implements AfterViewInit  {
     this.studentService.studentsAll().subscribe(
       data => {
         this.dataResponse = data;
-        // this.dataSource.data = this.dataResponse.data;
+        console.log(this.dataResponse);
+        this.dataSource = this.dataResponse.data;
       }
     );
   }
