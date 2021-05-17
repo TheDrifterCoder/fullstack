@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutes } from './app.routing';
 import { CatalogsModule } from './modules/catalogs.module';
 import { FeatureComponent } from './shared/feature/feature.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 
 @NgModule({
@@ -30,7 +31,8 @@ import { FeatureComponent } from './shared/feature/feature.component';
     AppRoutingModule,
     CatalogsModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
