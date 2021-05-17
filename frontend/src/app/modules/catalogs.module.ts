@@ -14,7 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   ],
   imports: [
     CatalogsRoutingModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [AuthService, 
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

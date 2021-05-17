@@ -1,4 +1,7 @@
 .header {
+
+    position: relative;
+    z-index: 1;
     // para la animacion de la cangre cangre
     &.open {
         .header__toggle {
