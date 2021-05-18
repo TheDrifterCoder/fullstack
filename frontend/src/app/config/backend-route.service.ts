@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class BackendRouteService {
 
-  private urlAPI = 'http://localhost/[aqui va la ruta del backend]/public/api';
+  private urlAPI = 'route here';
   constructor() { }
 
   backendURI(){
