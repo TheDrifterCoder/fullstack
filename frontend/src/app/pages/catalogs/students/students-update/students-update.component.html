@@ -2,7 +2,7 @@
     <div class="menu">
         {{title}}
         <div class="menu__right menu__right--midle">
-            <button [disabled]="!updateStudentForm.valid" type="submit" (click)="update()" class="menu__add"> Guardar </button>
+            <button type="submit" (click)="update()" class="menu__add"> Guardar </button>
             <button (click)="onDismiss()" type="submit" class="menu__delete"> Cancelar </button>
         </div>
     </div>
@@ -108,6 +108,6 @@
                 Ingresa tu número telefonico.
             </div>
         </div>
-        <button [disabled]="!updateStudentForm.valid" type="submit" class="menu__add"> Guardar </button>
+        <button type="submit" class="menu__add"> Guardar </button>
     </form>
 </div>

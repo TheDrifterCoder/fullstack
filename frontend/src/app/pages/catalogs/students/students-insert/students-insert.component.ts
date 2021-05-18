@@ -33,7 +33,6 @@ export class StudentsInsertComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<StudentsInsertComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmStudentInsert, private studentService: StudentsService, 
     private fb: FormBuilder) {
-    // Update view with given values
     this.title = data.title;
     this.message = data.message;
   }
@@ -88,23 +87,15 @@ export class StudentsInsertComponent implements OnInit {
   }
 
   onConfirm(): void {
-    // Close the dialog, return true
     this.dialogRef.close(true);
   }
 
   onDismiss(): void {
-    // Close the dialog, return false
     this.dialogRef.close(false);
   }
 }
 
-/**
- * Class to represent confirm dialog model.
- *
- * It has been kept here to keep it as part of shared component.
- */
 export class ConfirmStudentInsert {
-
   constructor(public title: string, public message: string) {
   }
 }

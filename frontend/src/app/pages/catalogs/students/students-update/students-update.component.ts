@@ -41,25 +41,11 @@ export class StudentsUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onReset();
-
-    this.updateStudentForm.patchValue({
-      id: this.dataTemp.id,
-      name: this.dataTemp.name,
-      patern_surname: this.dataTemp.patern_surname,
-      matern_surname: this.dataTemp.matern_surname,
-      birth_date: this.dataTemp.birth_date,
-      gender: this.dataTemp.gender,
-      academic_level_id: this.dataTemp.academic_level_id,
-      email: this.dataTemp.email,
-      phone: this.dataTemp.phone,
-   });
-    
+    this.initForm();
   }
 
   onReset() {
     this.updateStudentForm.reset();
-    this.initForm();
   }
 
 
@@ -77,7 +63,17 @@ export class StudentsUpdateComponent implements OnInit {
       created_at: [null]
     });
 
-    
+    this.updateStudentForm.patchValue({
+      id: this.dataTemp.id,
+      name: this.dataTemp.name,
+      patern_surname: this.dataTemp.patern_surname,
+      matern_surname: this.dataTemp.matern_surname,
+      birth_date: this.dataTemp.birth_date,
+      gender: this.dataTemp.gender,
+      academic_level_id: this.dataTemp.academic_level_id,
+      email: this.dataTemp.email,
+      phone: this.dataTemp.phone,
+   });    
   }
 
   isValidInput(fieldName: any): boolean {
@@ -100,7 +96,6 @@ export class StudentsUpdateComponent implements OnInit {
         }, 2000)
       },
       (error) => { 
-        this.onReset();
         let errs = (error.error.data);
         this.errors = Object.values(errs);
 

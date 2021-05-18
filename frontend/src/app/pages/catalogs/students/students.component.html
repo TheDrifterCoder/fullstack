@@ -3,7 +3,8 @@
   <div class="container container--pall template__background__content">
 
     <div class="menu">
-      <input type="text" [(ngModel)]="search" (keyup.enter)="buscarDatos()" class="menu__ssearch" placeholder="Busqueda por nombre y apellidos...">
+      <input type="text" [(ngModel)]="search" (keyup.enter)="buscarDatos()" class="menu__ssearch"
+        placeholder="Busqueda por nombre y apellidos...">
       <button class="menu__filter" (click)="buscarDatos()"> Buscar </button>
       <button class="menu__filter" (click)="getStudents()"> Recargar </button>
 
@@ -12,6 +13,11 @@
         <button class="menu__delete" (click)="delete()"> Eliminar </button>
       </div>
     </div>
+
+    <div *ngIf="showNotify" class="alert alert__success">
+      {{ notify }}
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <!-- Checkbox Column -->
@@ -37,10 +43,11 @@
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element">
           <span (click)="goUpdate(element);">
             {{element.name}}
-          </span> </td>
+          </span>
+        </td>
       </ng-container>
 
       <!-- Weight Column -->

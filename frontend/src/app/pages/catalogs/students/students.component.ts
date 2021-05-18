@@ -30,6 +30,9 @@ export class StudentsComponent implements AfterViewInit {
   public dataResponse: any;
   nPages = this.globals.paginator;
   tempData: any = [];
+  showNotify: boolean = false;
+  notify: String = "";
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -113,6 +116,22 @@ export class StudentsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
+
+      if(this.result){
+        this.studentService.deleteAll({data: this.datatoDelete}).subscribe(
+          data => {
+
+            this.showNotify = true;
+            this.notify = data.message;
+
+            setTimeout(()=>{ 
+              this.showNotify = false;
+              this.notify = "";          
+              this.getStudents();
+            }, 2000)
+          }
+        );
+      }
     });
   }
 
