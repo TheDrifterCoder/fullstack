@@ -16,8 +16,6 @@ import { FeatureComponent } from './shared/feature/feature.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

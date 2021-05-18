@@ -35,6 +35,10 @@ export class StudentsService {
     return this.http.post<any>(this.url + '/students', form.value);
   }
 
+  updateStudent(form: any): Observable<any>{
+    return this.http.post<any>(this.url + '/students/update', form.value);
+  }
+
   logout(token: any): Observable<any>{
     return this.http.post(this.url + '/logout', {'token': token});
     //return result;

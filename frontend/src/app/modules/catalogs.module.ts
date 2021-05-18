@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StudentsComponent } from '../pages/catalogs/students/students.component';
 import { UsersComponent } from '../pages/catalogs/users/users.component';
 import { StudentsInsertComponent } from '../pages/catalogs/students/students-insert/students-insert.component';
+import { StudentsUpdateComponent } from '../pages/catalogs/students/students-update/students-update.component';
 
 // materials
 import { MatTableModule } from '@angular/material/table';
@@ -27,7 +28,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   declarations: [
     StudentsComponent,
     UsersComponent,
-    StudentsInsertComponent
+    StudentsInsertComponent,
+    StudentsUpdateComponent
   ],
   imports: [
     BrowserModule,

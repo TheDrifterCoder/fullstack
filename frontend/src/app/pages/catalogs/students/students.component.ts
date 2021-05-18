@@ -9,6 +9,7 @@ import { Students } from '../../../interfaces/catalogs/students';
 
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { ConfirmStudentInsert, StudentsInsertComponent } from './students-insert/students-insert.component';
+import { ConfirmStudentUpdate, StudentsUpdateComponent } from './students-update/students-update.component';
 
 
 import { MatDialog } from '@angular/material/dialog';
@@ -28,18 +29,19 @@ export class StudentsComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Students>([]);
   public dataResponse: any;
   nPages = this.globals.paginator;
+  tempData: any = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
   }
   result: string = '';
 
   constructor(public globals: GlobalsService, private studentService: StudentsService, public dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getStudents();
   }
 
@@ -48,6 +50,9 @@ export class StudentsComponent implements AfterViewInit {
       data => {
         this.dataResponse = data;
         this.dataSource.data = this.dataResponse.data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator._intl.itemsPerPageLabel = "Estudiantes por página";
+        this.dataSource.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => { if (length == 0 || pageSize == 0) { return `0 of ${length}`; } length = Math.max(length, 0); const startIndex = page * pageSize; const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize; return `${startIndex + 1} - ${endIndex} de ${length}`; }
       }
     );
   }
@@ -108,14 +113,6 @@ export class StudentsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
-
-      if(this.result){
-        this.studentService.deleteAll({data: this.datatoDelete}).subscribe(
-          data => {
-            console.log(data);
-          }
-        );
-      }
     });
   }
 
@@ -131,12 +128,26 @@ export class StudentsComponent implements AfterViewInit {
         this.result = dialogResult;
   
         if(this.result){
-          this.studentService.deleteAll({data: this.datatoDelete}).subscribe(
-            data => {
-              console.log(data);
-            }
-          );
+          this.getStudents();
         }
       });
+  }
+
+  goUpdate(data: any){
+    this.globals.tempData = data;
+    const message = `Ingresa los datos requeridos para el registro de un nuevo estudiante.`;
+    const dialogData = new ConfirmStudentInsert("Actualizar datos del estudiante.", message);
+    const dialogRef = this.dialog.open(StudentsUpdateComponent, {
+      maxWidth: "800px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+
+      if(this.result){
+        this.getStudents();
+      }
+    });
   }
 }

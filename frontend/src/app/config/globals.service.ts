@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
 
   paginator = [10, 20, 100, 1000];
-  deleteMessage = "¿Estas seguro de eliminar el/los siguientes elementos?"
+  deleteMessage = "¿Estas seguro de eliminar el/los siguientes elementos?";
+  tempData: any = [];
   constructor() { }
 }

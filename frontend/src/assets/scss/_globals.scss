@@ -145,7 +145,17 @@ button,
     position: relative;
     padding: 15px 0px 15px 0px;
 
+    > button {
+        width: 7.5rem;
+        &:not(:last-child) {
+            margin-right: 15px;
+        }
+    }
     
+
+    &__filter {
+        background: linear-gradient(to right, $lightBlue, $Blue);
+    }
 
     &__right {
         float: right;
@@ -176,6 +186,8 @@ button,
         padding: 10px;
         line-height: 1.5;
         font-size: $font-small;
+
+        
     }
 
     &__add {
