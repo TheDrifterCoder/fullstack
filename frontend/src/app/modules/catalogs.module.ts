@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { StudentsComponent } from '../pages/catalogs/students/students.component';
 import { UsersComponent } from '../pages/catalogs/users/users.component';
@@ -8,12 +9,13 @@ import { AuthInterceptor } from '../auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // materiales
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCheckboxModule} from '@angular/material/checkbox'; 
-import {MatSortModule} from '@angular/material/sort'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import {MatSortModule} from '@angular/material/sort';
     UsersComponent
   ],
   imports: [
+    BrowserModule,
     CatalogsRoutingModule,
     CommonModule,
     MatDialogModule,
@@ -29,7 +32,11 @@ import {MatSortModule} from '@angular/material/sort';
     MatPaginatorModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatSortModule
+    MatSortModule,
+    MatButtonModule
+  ],
+  exports: [
+    MatButtonModule, MatDialogModule
   ],
   providers: [AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

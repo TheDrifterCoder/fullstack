@@ -6,7 +6,9 @@ import { GlobalsService } from 'src/app/config/globals.service';
 import { StudentsService } from 'src/app/services/catalogs/students.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Students } from '../../../interfaces/catalogs/students';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-students',
@@ -29,8 +31,9 @@ export class StudentsComponent implements AfterViewInit {
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
   }
+  result: string = '';
 
-  constructor(public globals: GlobalsService, private studentService: StudentsService) { }
+  constructor(public globals: GlobalsService, private studentService: StudentsService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getStudents();
@@ -71,7 +74,24 @@ export class StudentsComponent implements AfterViewInit {
       return array.id;
     });
 
+    // createCustomAlert(this.globals.deleteMessage);
+
     
+  }
+
+  confirmDialog(): void {
+    const message = `Are you sure you want to do this?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+    });
   }
 
   add(){

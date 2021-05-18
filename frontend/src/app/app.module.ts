@@ -14,7 +14,8 @@ import { AppRoutes } from './app.routing';
 import { CatalogsModule } from './modules/catalogs.module';
 import { FeatureComponent } from './shared/feature/feature.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
- 
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     FooterComponent,
     FeatureComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
-    RouterModule.forRoot(AppRoutes,{
+    RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),
     BrowserModule,
@@ -34,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthModule,
     BrowserAnimationsModule
   ],
+  entryComponents: [ConfirmDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
   ],
