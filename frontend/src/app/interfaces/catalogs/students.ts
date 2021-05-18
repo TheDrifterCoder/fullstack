@@ -1,4 +1,5 @@
 export interface Students {
+    id: number;
     position: number;
     name: string;
     parent_surname: string;

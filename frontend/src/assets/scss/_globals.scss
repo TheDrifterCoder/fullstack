@@ -30,7 +30,15 @@ h3 {
     margin-top: 0;
 }
 
-.alert{
+span {
+     color: $lightBlue;
+     font-weight: 500;
+     cursor: pointer;
+     text-decoration: underline;
+
+}
+
+.alert {
     color: $white;
     font-weight: 300;
     font-size: $font-small;
@@ -39,7 +47,6 @@ h3 {
 
     &__success {
         background-color: $green;
-
     }
 
     &__danger {
@@ -128,8 +135,51 @@ button,
         opacity: 0.8;
     }
 
-    &--login{
+    &--login {
         align-items: center;
+    }
+}
+
+.menu {
+    display: flow-root;
+    position: relative;
+    padding: 15px 0px 15px 0px;
+
+    
+
+    &__right {
+        float: right;
+        margin-top: 20px;
+        
+
+        > button {
+            width: 7.5rem;
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+        }
+    }
+
+    &__ssearch {
+        width: 40%;
+        border-radius: 3px;
+        margin-top: 20px;
+        border: solid 1px;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        background-color: #ecf0f1;
+        padding: 10px;
+        line-height: 1.5;
+        font-size: $font-small;
+    }
+
+    &__add {
+        background: linear-gradient(to right, $green, $darkGreen);
+    }
+
+    &__delete {
+        background: linear-gradient(to right, $red, $darkRed);
     }
 }
 

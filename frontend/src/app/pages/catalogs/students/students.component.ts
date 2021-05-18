@@ -6,6 +6,7 @@ import { GlobalsService } from 'src/app/config/globals.service';
 import { StudentsService } from 'src/app/services/catalogs/students.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Students } from '../../../interfaces/catalogs/students';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-students',
@@ -14,13 +15,12 @@ import { Students } from '../../../interfaces/catalogs/students';
 })
 export class StudentsComponent implements AfterViewInit {
   displayedColumns: string[] = ['select', 'position', 'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level', 'email', 'phone'];
-  // dataSource = ELEMENT_DATA;
+
   students = [];
+  selected = [];
   selection = new SelectionModel<Students>(false, []);
-  // displayedColumns: string[] = ['position', 'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level', 'email', 'phone'];
   dataSource = new MatTableDataSource<Students>([]);
   public dataResponse: any;
-  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   nPages = this.globals.paginator;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -51,7 +51,6 @@ export class StudentsComponent implements AfterViewInit {
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
@@ -59,10 +58,23 @@ export class StudentsComponent implements AfterViewInit {
   }
 
   checkboxLabel(row?: Students): string {
+    
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
+  delete(){
+    var array = this.selection.selected;
+    var toDelete = array.map(function(array) {
+      return array.id;
+    });
+
+    
+  }
+
+  add(){
+
+  }
 }
