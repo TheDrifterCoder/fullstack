@@ -150,6 +150,10 @@ button,
     &__right {
         float: right;
         margin-top: 20px;
+
+        &--midle {
+             margin-top: auto;
+        }
         
 
         > button {

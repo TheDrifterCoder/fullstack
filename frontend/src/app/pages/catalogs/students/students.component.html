@@ -2,13 +2,9 @@
 
   <div class="container container--pall template__background__content">
 
-    <!-- sectio ntestin -->
-    <button mat-raised-button color="primary" (click)="confirmDialog()">Confirm</button>
-    <br>
-    Response is: {{result}}
-
     <div class="menu">
-      <input type="text" class="menu__ssearch" placeholder="Busqueda por nombre y apellidos...">
+      <input type="text" [(ngModel)]="search" (keyup.enter)="buscarDatos()" class="menu__ssearch" placeholder="Busqueda por nombre y apellidos...">
+      <button (click)="buscarDatos()"></button>
       <div class="menu__right">
         <button class="menu__add" (click)="add()"> + Agregar </button>
         <button class="menu__delete" (click)="delete()"> Eliminar </button>

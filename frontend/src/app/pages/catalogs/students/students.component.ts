@@ -8,6 +8,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Students } from '../../../interfaces/catalogs/students';
 
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmStudentInsert, StudentsInsertComponent } from './students-insert/students-insert.component';
+
+
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -17,8 +20,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class StudentsComponent implements AfterViewInit {
   displayedColumns: string[] = ['select', 'position', 'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level', 'email', 'phone'];
-
+  search  = "";
   students = [];
+  datatoDelete: any;
   selected = [];
   selection = new SelectionModel<Students>(false, []);
   dataSource = new MatTableDataSource<Students>([]);
@@ -74,16 +78,24 @@ export class StudentsComponent implements AfterViewInit {
       return array.id;
     });
 
-    // createCustomAlert(this.globals.deleteMessage);
-
-    
+    this.datatoDelete = toDelete;
+    this.confirmDelete();
   }
 
-  confirmDialog(): void {
-    const message = `Are you sure you want to do this?`;
+  buscarDatos(){
+    var filter = this.search;
+    this.studentService.search(filter).subscribe(
+      data => {
+        this.dataResponse = data;
+        this.dataSource.data = this.dataResponse.data;
+      }
+    )
+  }
 
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
 
+  confirmDelete() {
+    const message = `¿Está seguro de realizar la siguiente operación?`;
+    const dialogData = new ConfirmDialogModel("¿Continuar?", message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
@@ -91,10 +103,35 @@ export class StudentsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
+
+      if(this.result){
+        this.studentService.deleteAll({data: this.datatoDelete}).subscribe(
+          data => {
+            console.log(data);
+          }
+        );
+      }
     });
   }
 
   add(){
-
+      const message = `Ingresa los datos requeridos para el registro de un nuevo estudiante.`;
+      const dialogData = new ConfirmStudentInsert("Registrar nuevo estudiante.", message);
+      const dialogRef = this.dialog.open(StudentsInsertComponent, {
+        maxWidth: "800px",
+        data: dialogData
+      });
+  
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        this.result = dialogResult;
+  
+        if(this.result){
+          this.studentService.deleteAll({data: this.datatoDelete}).subscribe(
+            data => {
+              console.log(data);
+            }
+          );
+        }
+      });
   }
 }
