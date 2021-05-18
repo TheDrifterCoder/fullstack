@@ -21,8 +21,12 @@ class StudentController extends BaseController
      */
     public function index()
     {
-        $students = Student::all();
-        return $this->sendResponse(StudentResource::collection($students), 'Lista de estudiantes');
+        $pagination = 50;
+        $model = new Student();
+        $expected_data = $model->getStudents($pagination);
+
+        $students = $expected_data;
+        return $this->sendResponse('Lista de estudiantes', StudentResource::collection($students));
     }
 
     // Obtiene todos los registros aun si han sido eliminados

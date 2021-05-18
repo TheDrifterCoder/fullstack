@@ -12,6 +12,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatSortModule} from '@angular/material/sort'; 
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCheckboxModule,
+    MatSortModule
   ],
   providers: [AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

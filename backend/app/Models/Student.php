@@ -36,6 +36,12 @@ class Student extends Model
         $this->attributes['matern_surname'] = ucfirst($value);
     }
 
+    public function getStudents($filter){
+        return Student::join('academic_levels', 'academic_levels.id', '=', 'students.academic_level_id', 'left outer')
+            ->selectRaw('students.id, name, patern_surname, matern_surname, birth_date, gender, email, phone, schooling as academic_level')
+            ->get();
+    }
+
  
 
     
