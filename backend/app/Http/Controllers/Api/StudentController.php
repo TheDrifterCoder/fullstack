@@ -30,9 +30,9 @@ class StudentController extends BaseController
     }
 
     // Obtiene todos los registros aun si han sido eliminados
-    public function getAllWithTrashedStudents(){
+    public function getAllWithTrashedStudents()
+    {
         $students = Student::withTrashed()->get();
-
         return $students;
     }
 
@@ -45,14 +45,32 @@ class StudentController extends BaseController
     public function store(Request $request)
     {
         $input_data = $request->all();
+
+        $messages = [
+            'name.required' => 'Ingresa el nombre del estudiante.',
+            'patern_surname.required' => 'Ingresa el apellido paterno del estudiante.',
+            'matern_surname.required' => 'Ingresa el apellido materno del estudiante.',
+            'birth_date.required' => 'Ingresa la fecha de nacimiento del estudiante.',
+            'gender.required' => 'Ingresa el género del estudiante.',
+            'academic_level_id.required' => 'Ingresa el nivel academico del estudiante.',
+            'email.required' => 'Ingresa el correo electronico del estudiante.',
+            'email.email' => 'El formato de correo ingresado no es valido.',
+            'email.unique' => 'El correo ingresado, ya se ha registrado.',
+            'phone.required' => 'Ingresa el teléfono del estudiante.',
+            'phone.numeric' => 'El telefono debe ser numérico.',
+        ];
+
+
         $validator = Validator::make($input_data, [
             'name' => 'required',
             'patern_surname' => 'required',
             'matern_surname' => 'required',
             'birth_date' => 'required',
             'gender' => 'required',
-            'academic_level_id' => 'required'
-        ]);
+            'academic_level_id' => 'required',
+            'email' => 'required|email|unique:students',
+            'phone' => 'required|numeric',
+        ], $messages);
 
         if (($validator->fails())) {
             return $this->sendError("Error de validación", $validator->errors());
@@ -73,16 +91,6 @@ class StudentController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -93,21 +101,37 @@ class StudentController extends BaseController
     {
         $student_selected = Student::find($request->id);
         $input_data = $request->all();
+
+        $messages = [
+            'name.required' => 'Ingresa el nombre del estudiante.',
+            'patern_surname.required' => 'Ingresa el apellido paterno del estudiante.',
+            'matern_surname.required' => 'Ingresa el apellido materno del estudiante.',
+            'birth_date.required' => 'Ingresa la fecha de nacimiento del estudiante.',
+            'gender.required' => 'Ingresa el género del estudiante.',
+            'academic_level_id.required' => 'Ingresa el nivel academico del estudiante.',
+            'email.required' => 'Ingresa el correo electronico del estudiante.',
+            'phone.required' => 'Ingresa el teléfono del estudiante.',
+            'phone.numeric' => 'El telefono debe ser numérico.',
+        ];
+
+
         $validator = Validator::make($input_data, [
             'name' => 'required',
             'patern_surname' => 'required',
             'matern_surname' => 'required',
             'birth_date' => 'required',
             'gender' => 'required',
-            'academic_level_id' => 'required'
-        ]);
+            'academic_level_id' => 'required',
+            'email' => 'required',
+            'phone' => 'required|numeric'
+        ], $messages);
 
         if (($validator->fails())) {
             return $this->sendError("Error de validación", $validator->errors());
         }
 
         // se valida si el nombre completo ya ha sido creado previamente
-         $fullname_exists =  Student::where('name', $input_data['name'])
+        $fullname_exists =  Student::where('name', $input_data['name'])
             ->where('patern_surname', $input_data['patern_surname'])
             ->where('matern_surname', $input_data['matern_surname'])
             ->where('id', '<>',  $student_selected->id)
@@ -130,8 +154,31 @@ class StudentController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function destroy(Student $student)
-    {        
+    {
         $student->delete();
         return $this->sendResponse([], 'Los datos del estudiante se han eliminado correctamente.');
+    }
+
+
+    // 
+    public function delete(Request $request)
+    {
+        $dataInput = $request->all();
+        $total = count($request->all());
+
+        for ($i = 0; $i < $total; $i++) {
+            $data = Student::find($dataInput['data'][$i]);
+            $data->delete();
+        }
+
+        return $this->sendResponse('Los datos del estudiante se han eliminado correctamente.', []);
+    }
+
+    public function filter($filter){
+        $model = new Student();
+        $expected_data = $model->getStudentsFiltered($filter);
+
+        $students = $expected_data;
+        return $this->sendResponse('Lista de estudiantes', StudentResource::collection($students));
     }
 }

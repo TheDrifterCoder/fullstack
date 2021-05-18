@@ -12,13 +12,8 @@ class Student extends Model
 
     protected $table = "students";
     protected $fillable = [
-        'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level_id'
+        'name', 'patern_surname', 'matern_surname', 'birth_date', 'gender', 'academic_level_id', 'email', 'phone'
     ];
-
-    public function academic_level(){
-        return $this->hasOne(academicLevel::class);
-    }
-
 
     // Mutators, para poner en mayuscula la primera letra del nombre y apellidos
     public function setNameAttribute($value)
@@ -40,6 +35,15 @@ class Student extends Model
         return Student::join('academic_levels', 'academic_levels.id', '=', 'students.academic_level_id', 'left outer')
             ->selectRaw('students.id, name, patern_surname, matern_surname, birth_date, gender, email, phone, schooling as academic_level')
             ->get();
+    }
+
+    public function getStudentsFiltered($filter){
+        return Student::join('academic_levels', 'academic_levels.id', '=', 'students.academic_level_id', 'left outer')
+        ->selectRaw('students.id, name, patern_surname, matern_surname, birth_date, gender, email, phone, schooling as academic_level')
+        ->whereRaw("upper(name) LIKE '%" . strtoupper($filter) . "%'")
+        ->orWhereRaw("upper(patern_surname) LIKE '%" . strtoupper($filter) . "%'")
+        ->orWhereRaw("upper(matern_surname) LIKE '%" . strtoupper($filter) . "%'")
+        ->get();
     }
 
  

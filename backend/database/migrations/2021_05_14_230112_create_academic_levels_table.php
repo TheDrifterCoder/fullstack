@@ -17,8 +17,6 @@ class CreateAcademicLevelsTable extends Migration
             Schema::create('academic_levels', function (Blueprint $table) {
                 $table->id();
                 $table->string('schooling', 60);
-                
-                // 1 para kinder, 2 para primaria, 3 para secundaria, 4 para universidad, etc..
                 $table->unsignedSmallInteger('type');
                 $table->timestamps();
             });

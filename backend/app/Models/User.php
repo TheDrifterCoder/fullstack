@@ -43,4 +43,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function getUsers($filter){
+        return User::all();
+    }
+
+    public function getUsersFiltered($filter){
+        return User::whereRaw("upper(name) LIKE '%" . strtoupper($filter) . "%'")
+        ->orWhereRaw("upper(lastname) LIKE '%" . strtoupper($filter) . "%'")
+        ->orWhereRaw("upper(login_user) LIKE '%" . strtoupper($filter) . "%'")
+        ->get();
+    }
+
+
 }

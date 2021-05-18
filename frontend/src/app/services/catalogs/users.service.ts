@@ -25,6 +25,4 @@ export class UsersService {
   search(filter: string){
     return this.http.get(this.url + "/users/filter/" + filter);
   }
-
-
 }
