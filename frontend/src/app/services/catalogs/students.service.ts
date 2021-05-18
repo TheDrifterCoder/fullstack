@@ -12,6 +12,7 @@ const token = localStorage.getItem('token');
 export class StudentsService {
 
   private url: any;
+  public academic_levels = [];
 
   constructor(private uriBack: BackendRouteService, private http: HttpClient) {
     this.url = this.uriBack.backendURI();    
@@ -28,6 +29,10 @@ export class StudentsService {
   logIn(form: any): Observable<any>{
     return this.http.post(this.url + '/login', form.value);
     //return result;
+  }
+
+  storeStudent(form: any): Observable<any>{
+    return this.http.post<any>(this.url + '/students', form.value);
   }
 
   logout(token: any): Observable<any>{

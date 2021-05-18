@@ -2,26 +2,30 @@
     <div class="menu">
         {{title}}
         <div class="menu__right menu__right--midle">
-            <button [disabled]="!insertStudentForm.valid" type="submit" class="menu__add"> Guardar </button>
+            <button [disabled]="!insertStudentForm.valid" type="submit" (click)="insert()" class="menu__add"> Guardar </button>
             <button (click)="onDismiss()" type="submit" class="menu__delete"> Cancelar </button>
         </div>
+    </div>
+
+    <div *ngIf="showNotify" class="alert alert__success">
+        {{ notify }}
+    </div>
+    <div *ngIf="errors.length > 0" class="alert alert__danger">
+        <p *ngFor="let error of errors">
+            {{ error }}
+        </p>
     </div>
 </h1>
 
 <div mat-dialog-content>
     <p>{{message}}</p>
+    
+
     <form [formGroup]="insertStudentForm" (ngSubmit)="insert()">
         <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+       
             <label for="name"> Nombre </label>
-            <input type="name" class="form-control" formControlName="name">
+            <input type="name" class="form-control" maxlength="30" formControlName="name">
         </div>
         <div *ngIf="isValidInput('name')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['name'].errors?.required">
@@ -29,17 +33,9 @@
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+        <div class="form">           
             <label for="patern_surname"> Apelido Paterno</label>
-            <input type="patern_surname" class="form-control" formControlName="patern_surname">
+            <input type="patern_surname" class="form-control" maxlength="30" formControlName="patern_surname">
         </div>
         <div *ngIf="isValidInput('patern_surname')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['patern_surname'].errors?.required">
@@ -47,17 +43,9 @@
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+        <div class="form">            
             <label for="matern_surname"> Apellido Materno</label>
-            <input type="matern_surname" class="form-control" formControlName="matern_surname">
+            <input type="matern_surname" class="form-control" maxlength="30" formControlName="matern_surname">
         </div>
         <div *ngIf="isValidInput('matern_surname')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['matern_surname'].errors?.required">
@@ -65,17 +53,9 @@
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+        <div class="form">            
             <label for="birth_date"> Fecha de Nacimiento</label>
-            <input type="birth_date" class="form-control" formControlName="birth_date">
+            <input type="date" class="form-control" formControlName="birth_date">
         </div>
         <div *ngIf="isValidInput('birth_date')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['birth_date'].errors?.required">
@@ -83,19 +63,11 @@
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
-            <label for="gender"> Sexo</label>
+        <div class="form">           
+            <label for="gender"> Sexo </label>
             <div style="width: 100%;">
                 <mat-form-field>
-                    <mat-select>
+                    <mat-select [(ngModel)]="selectedGender" formControlName="gender">
                         <mat-option *ngFor="let gender of genders" [value]="gender.value">
                             {{gender.viewValue}}
                         </mat-option>
@@ -104,71 +76,38 @@
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
-            <label for="academic_level">Grado de Estudios Actual </label>
+        <div class="form">           
+            <label for="academic_level_id">Grado de Estudios Actual </label>
             <div style="width: 100%;">
                 <mat-form-field>
-                    <mat-select>
-                        <mat-option *ngFor="let gender of genders" [value]="gender.value">
-                            {{gender.viewValue}}
+                    <mat-select [(ngModel)]="selectedAcademicLevel" formControlName="academic_level_id">
+                        <mat-option *ngFor="let academic_level_id of academic_levels" [value]="academic_level_id.value">
+                            {{academic_level_id.viewValue}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+        <div class="form">            
             <label for="email"> Email </label>
-            <input type="email" class="form-control" formControlName="email">
+            <input type="email" class="form-control" maxlength="30" formControlName="email">
         </div>
         <div *ngIf="isValidInput('email')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['email'].errors?.required">
-                Introduce tu usuario.
+                Ingresa un email válido.
             </div>
         </div>
 
-        <div class="form">
-            <div *ngIf="notify" class="alert alert__success">
-                {{ notify }}
-            </div>
-            <div *ngIf="errors.length > 0" class="alert alert__danger">
-                <p *ngFor="let error of errors">
-                    {{ error }}
-                </p>
-            </div>
+        <div class="form">            
             <label for="phone"> Teléfono </label>
-            <input type="phone" class="form-control" formControlName="phone">
+            <input type="text" class="form-control" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" formControlName="phone">
         </div>
         <div *ngIf="isValidInput('phone')" class="alert alert__danger">
             <div *ngIf="insertStudentForm.controls['phone'].errors?.required">
-                Introduce tu usuario.
+                Ingresa tu número telefonico.
             </div>
         </div>
+        <button [disabled]="!insertStudentForm.valid" type="submit" class="menu__add"> Guardar </button>
     </form>
-</div>
-
-<div mat-dialog-actions>
-    <div class="menu">
-        <div class="menu__right">
-            <button [disabled]="!insertStudentForm.valid" type="submit" class="menu__add"> Guardar </button>
-            <button (click)="onDismiss()" type="submit" class="menu__delete"> Cancelar </button>
-        </div>
-    </div>
-
 </div>

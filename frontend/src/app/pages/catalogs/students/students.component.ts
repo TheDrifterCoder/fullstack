@@ -84,12 +84,17 @@ export class StudentsComponent implements AfterViewInit {
 
   buscarDatos(){
     var filter = this.search;
-    this.studentService.search(filter).subscribe(
-      data => {
-        this.dataResponse = data;
-        this.dataSource.data = this.dataResponse.data;
-      }
-    )
+
+    if(filter.trim() != ''){
+      this.studentService.search(filter).subscribe(
+        data => {
+          this.dataResponse = data;
+          this.dataSource.data = this.dataResponse.data;
+        }
+      )
+    } else {
+      this.getStudents();
+    }
   }
 
 

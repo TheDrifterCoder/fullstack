@@ -14,12 +14,21 @@ export class StudentsInsertComponent implements OnInit {
     {value: 'Masculino', viewValue: 'Masculino'},
     {value: 'Femenino', viewValue: 'Femenino'},
   ];
+  academic_levels = [
+    {value: '1', viewValue: 'Primaria primer grado'},
+    {value: '2', viewValue: 'Secundaria primer grado'},
+  ];
 
   title: string;
   message: string;
   insertStudentForm!: FormGroup;
   errors: any = [];
-  notify!: string;
+  showNotify: boolean = false;
+  notify: String = "";
+  selectedGender!: string;
+  selectedAcademicLevel!: string;
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2020, 0, 1);
 
   constructor(public dialogRef: MatDialogRef<StudentsInsertComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmStudentInsert, private studentService: StudentsService, 
@@ -33,14 +42,19 @@ export class StudentsInsertComponent implements OnInit {
     this.initForm();
   }
 
+  onReset() {
+    this.insertStudentForm.reset();
+    this.initForm();
+  }
+
   initForm(){
     this.insertStudentForm = this.fb.group({
       name: [null, [Validators.required]],
       patern_surname: [null, [Validators.required]],
       matern_surname: [null, [Validators.required]],
       birth_date: [null, [Validators.required]],
-      gender: [null, [Validators.required]],
-      academic_level: [null, [Validators.required]],
+      gender: [null],
+      academic_level_id: [null],
       email: [null, [Validators.required]],
       phone: [null, [Validators.required]],
     });
@@ -53,12 +67,22 @@ export class StudentsInsertComponent implements OnInit {
 
   insert(){
     console.log(this.insertStudentForm);
-    this.studentService.logIn(this.insertStudentForm).subscribe(
+    this.studentService.storeStudent(this.insertStudentForm).subscribe(
       (response) => { 
-        console.log(response.data.token);
+        this.showNotify = true;
+        this.notify = response.message;
+        setTimeout(()=>{ 
+          this.showNotify = false;
+          this.notify = "";
+        }, 4000)
+
+        this.onReset();
       },
       (error) => { 
+        let errs = (error.error.data);
+        this.errors = Object.values(errs);
 
+        setTimeout(()=>{ this.errors = [] }, 4000)
       }
     );
   }
