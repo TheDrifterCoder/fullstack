@@ -53,64 +53,9 @@ export class AuthService {
 
   logIn(form: any): Observable<any>{
     return this.http.post(this.url + '/login', form.value);
-    //return result;
   }
 
   logout(token: any): Observable<any>{
     return this.http.post(this.url + '/logout', {'token': token});
-    //return result;
   }
-
-  // public get isLoggedIn() { return !!sessionStorage.getItem('token'); }  
-  // public get getToken() { return localStorage.getItem('token'); }
-  // // public get getRefreshToken() { return localStorage.getItem('refresh'); }
-
-  // isLoggedIn(): boolean {
-  //   return this.islogged;
-  // }
-
-  // public register(userData: any): Observable<any>{
-  //   var route = this.url + "/register";
-  //   return this.http.post(route, userData);
-  // }
-
-  // public login(userData: any): Observable<any> {
-  //    var route = this.url + "/login";
-  //    return this.http.post(route, userData).pipe(map(response => {
-  //     return this.saveToken(response);
-  //    }));
-  // }
-
-  // private saveToken(token: any): any {
-  //   localStorage.removeItem('token');
-  //   localStorage.setItem('token', token.data.token);
-  //   localStorage.setItem('auth_user', token.data.user);
-  //   return token;    
-  // }
-
-  // logout(token: any): Observable<any>{
-  //   return this.http.post(this.url + '/logout', {'token': token});
-  // }
-
-  // public isAuthenticated(){
-  // 	const promise = new Promise(
-  // 		(resolve,reject) => {
-  // 			setTimeout(() => {
-  //         let t = localStorage.getItem('token');
-  //         if(t){
-  //           this.islogged = true;
-  //           resolve(this.islogged);
-  //         }else{
-  //           this.islogged = false;
-  //           reject();
-  //         }
-  //       },800);
-  // 		});
-
-  // 	return promise;
-  // }
-
-  // public getUserLogged(): string {
-  //    return localStorage.getItem('auth_user') || '';
-  // }
 }

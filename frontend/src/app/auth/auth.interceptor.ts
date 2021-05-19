@@ -47,28 +47,6 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const requestChange = request.clone({headers});
     console.log(requestChange);
-    return next.handle(requestChange);
-    // request = this.setHeaders(request);
-    // return next.handle(request);
-    // .pipe(
-    //   catchError((error: any) => {
-    //     if (error instanceof HttpErrorResponse){
-    //       switch (error.status) {
-    //         case 0:
-    //           return throwError ({status: error.status, message: "No se pudo conectar al servidor, contacte con el administrador."} as AppResponse);
-
-    //         default:
-    //           return throwError ({status: error.status, message: error.message} as AppResponse);
-    //       }
-    //     } else if(error.error instanceof ErrorEvent) {
-    //       return throwError({status: error.status, message: error.error.message} as AppResponse);
-    //     } else {
-    //       return throwError({status: error.status, message: error.error.message} as AppResponse);
-    //     }
-    //   }),
-    //   finalize(() => {
-    //     console.log("Conexión autorizada");
-    //   })
-    // );
+    return next.handle(requestChange);    
   }
 }

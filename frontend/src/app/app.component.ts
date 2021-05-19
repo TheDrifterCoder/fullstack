@@ -13,7 +13,6 @@ export class AppComponent {
   constructor() {
     this.scriptLanding = document.createElement("script");
     this.scriptLanding.src = "../assets/js/script.js";
-    // this.scriptLanding.src = "/../../assets/js/script.js";
     document.body.appendChild(this.scriptLanding);
   }
 }

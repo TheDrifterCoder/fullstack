@@ -35,7 +35,6 @@ export class StudentsUpdateComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<StudentsUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmStudentUpdate, private studentService: StudentsService, 
     private fb: FormBuilder, public globals: GlobalsService) {
-    // Update view with given values
     this.title = data.title;
     this.message = data.message;
   }
@@ -105,16 +104,13 @@ export class StudentsUpdateComponent implements OnInit {
   }
 
   onConfirm(): void {
-    // Close the dialog, return true
     this.dialogRef.close(true);
   }
 
   onDismiss(): void {
-    // Close the dialog, return false
     this.dialogRef.close(false);
   }
 }
-
 
 // Esta parte sepuede modular
 export class ConfirmStudentUpdate {
